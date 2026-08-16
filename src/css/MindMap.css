@@ -1,0 +1,103 @@
+.mind-section {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.mind-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+.mind-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.mind-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+.mind-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.mind-error {
+  background: var(--error-light);
+  color: var(--error);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+}
+.mind-container {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+.mind-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mind-label {
+  padding: 10px 20px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+.depth-0 .mind-label {
+  font-size: 18px;
+  padding: 14px 28px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+}
+.depth-1 .mind-label {
+  font-size: 15px;
+  background: var(--accent-light);
+  color: var(--accent);
+}
+.depth-2 .mind-label {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+.depth-3 .mind-label {
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  border-color: var(--border-light);
+  font-size: 13px;
+  font-weight: 500;
+}
+.mind-children {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid var(--border);
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.mind-children::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background: var(--border);
+  transform: translateX(-50%);
+}

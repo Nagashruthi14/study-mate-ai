@@ -1,0 +1,128 @@
+.flash-section {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.flash-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+.flash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.flash-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+.flash-error {
+  background: var(--error-light);
+  color: var(--error);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+}
+.flash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.flash-counter {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.flash-card {
+  width: 100%;
+  min-height: 250px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.flash-card .flash-front,
+.flash-card .flash-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  transition: transform 0.6s ease;
+  text-align: center;
+}
+.flash-card {
+  position: relative;
+  width: 100%;
+  min-height: 250px;
+}
+.flash-front {
+  background: var(--accent);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+}
+.flash-back {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.7;
+  border: 2px solid var(--accent);
+  transform: rotateY(180deg);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+}
+.flash-card.flipped .flash-front {
+  transform: rotateY(180deg);
+}
+.flash-card.flipped .flash-back {
+  transform: rotateY(360deg);
+}
+.flash-hint {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 16px;
+}
+.flash-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.flash-controls button {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+}
+.flash-controls button:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.flash-controls button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.flash-controls .fav-active {
+  color: var(--error);
+  background: var(--error-light);
+  border-color: var(--error);
+}
