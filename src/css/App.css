@@ -6,34 +6,17 @@
 
 .main {
   flex: 1;
-  max-width: 1200px;
+  max-width: 860px;
   width: 100%;
   margin: 0 auto;
-  padding: 24px 20px;
+  padding: 20px 16px;
 }
 
-.main-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-
-@media (max-width: 768px) {
-  .main-split {
-    grid-template-columns: 1fr;
-  }
-}
-
-.split-left {
+/* ===== NEW: Upload + Chat stacked layout ===== */
+.upload-chat-layout {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-.split-right {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 }
 
 .app-error {
@@ -45,6 +28,7 @@
   font-size: 14px;
 }
 
+/* ===== BUTTONS ===== */
 .gen-btn {
   display: inline-flex;
   align-items: center;
@@ -87,34 +71,39 @@
   border-color: var(--accent);
   color: var(--accent);
 }
+
+/* ===== HISTORY PANEL ===== */
 .history-panel {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
-  padding: 24px;
-  margin-bottom: 24px;
+  padding: 20px;
+  margin-bottom: 20px;
   box-shadow: var(--shadow);
-  max-height: 400px;
+  max-height: 380px;
   overflow-y: auto;
 }
 
 .history-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 16px;
+  flex-wrap: wrap;
 }
 
 .history-header h3 {
   flex: 1;
   font-size: 18px;
+  min-width: 120px;
 }
 
 .history-clear-btn,
 .history-close-btn {
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: var(--radius-sm);
   font-size: 13px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .history-clear-btn {
@@ -142,11 +131,10 @@
 .history-item {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
+  gap: 8px;
+  padding: 12px 14px;
   background: var(--bg-secondary);
   border-radius: var(--radius);
-  cursor: pointer;
   transition: all var(--transition);
 }
 
@@ -154,15 +142,34 @@
   background: var(--accent-light);
 }
 
+.history-item-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.history-item-info:hover {
+  opacity: 0.8;
+}
+
 .history-item-name {
   font-weight: 600;
   font-size: 14px;
-  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .history-item-date {
   font-size: 12px;
   color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .history-item-chats {
@@ -171,28 +178,8 @@
   background: var(--accent-light);
   padding: 2px 8px;
   border-radius: 10px;
-}
-
-.history-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background: var(--bg-secondary);
-  border-radius: var(--radius);
-  transition: all var(--transition);
-}
-
-.history-item-info {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex: 1;
-  cursor: pointer;
-}
-
-.history-item-info:hover {
-  opacity: 0.8;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .history-delete-btn {
@@ -214,4 +201,37 @@
 .history-delete-btn:hover {
   background: var(--error);
   color: #fff;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .main {
+    padding: 12px 12px 70px;
+  }
+  .upload-chat-layout {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 10px 8px 66px;
+  }
+  .history-panel {
+    padding: 14px;
+    max-height: 320px;
+  }
+  .history-header {
+    gap: 6px;
+  }
+  .history-header h3 {
+    font-size: 16px;
+  }
+  .history-item {
+    padding: 10px;
+    gap: 6px;
+  }
+  .history-item-date {
+    display: none;
+  }
 }

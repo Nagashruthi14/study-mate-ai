@@ -4,13 +4,12 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Upload from './components/Upload'
 import Chat from './components/Chat'
-import Reading from './components/Reading'
 import Quiz from './components/Quiz'
 import MindMap from './components/MindMap'
 import Flashcards from './components/Flashcards'
 import About from './components/About'
 import Loader from './components/Loader'
-import { askQuestion, generateSummary } from './utils/ai'
+import { askQuestion } from './utils/ai'
 import { formatText } from './utils/helpers'
 import {
   getDocumentText, setDocumentText,
@@ -84,7 +83,6 @@ export default function App() {
   var showHistory = showHistSt[0]
   var setShowHistory = showHistSt[1]
 
-  // NEW: Summary State
   var sumSt = useState('')
   var summary = sumSt[0]
   var setSummary = sumSt[1]
@@ -135,7 +133,7 @@ export default function App() {
     setDocName(name)
     setDocumentText(text)
     setDocumentName(name)
-    setSummary('') // Clear summary when new doc is uploaded
+    setSummary('')
   }
 
   function handleAsk(question) {
@@ -156,20 +154,24 @@ export default function App() {
     })
   }
 
-  // NEW: Handle Summary Generation
   function handleSummary() {
     if (!docText) return
     setIsLoading(true)
     setLoadingMsg('Generating summary...')
     setError('')
-    generateSummary(docText).then(function (text) {
-      var formatted = formatText(text)
-      setSummary(formatted)
+    askQuestion(docText, 'Provide a comprehensive summary of this document. Cover all main topics and key points.', []).then(function (answer) {
+      setSummary(formatText(answer))
       setIsLoading(false)
     }).catch(function (err) {
       setError(err.message || 'Failed to generate summary.')
       setIsLoading(false)
     })
+  }
+
+  function handleClearChat() {
+    setChatHist([])
+    setChatHistory([])
+    setSummary('')
   }
 
   function handleSaveQuiz(data) {
@@ -192,6 +194,11 @@ export default function App() {
     saveFavsToStorage(data)
   }
 
+  function handleDeleteHistory(id) {
+    deleteHistoryItem(id)
+    setHistoryList(getHistory())
+  }
+
   function handleRefresh() {
     if (docText && docText.trim()) {
       var session = {
@@ -212,18 +219,13 @@ export default function App() {
     setFlashLocal([])
     setMapLocal(null)
     setFavs([])
-    setSummary('') // Clear summary on refresh
+    setSummary('')
     setActive('upload')
   }
 
   function handleClearHistory() {
     clearHistory()
     setHistoryList([])
-  }
-
-  function handleDeleteHistory(id) {
-    deleteHistoryItem(id)
-    setHistoryList(getHistory())
   }
 
   function handleRestore(session) {
@@ -235,7 +237,7 @@ export default function App() {
       setChatHist(session.chatHistory)
       setChatHistory(session.chatHistory)
     }
-    setSummary('') // Clear summary when restoring
+    setSummary('')
     setShowHistory(false)
     setActive('upload')
   }
@@ -245,22 +247,20 @@ export default function App() {
   function renderContent() {
     if (active === 'upload') {
       return (
-        <div className="main-split">
-          <div className="split-left">
-            <Upload onUpload={handleUpload} isUploaded={isUploaded} docName={docName} isLoading={isLoading} />
-            {/* UPDATED: Passed docName to Chat */}
-            {isUploaded && <Chat chatHistory={chatHistory} onAsk={handleAsk} isLoading={isLoading} isUploaded={isUploaded} docName={docName} />}
-          </div>
-          <div className="split-right">
-            {/* UPDATED: Passed summary props */}
-            <Reading 
-              chatHistory={chatHistory} 
-              isUploaded={isUploaded} 
-              summary={summary} 
-              onSummary={handleSummary} 
-              isLoading={isLoading} 
+        <div className="upload-chat-layout">
+          <Upload onUpload={handleUpload} isUploaded={isUploaded} docName={docName} isLoading={isLoading} />
+          {isUploaded && (
+            <Chat
+              chatHistory={chatHistory}
+              onAsk={handleAsk}
+              onClearChat={handleClearChat}
+              isLoading={isLoading}
+              isUploaded={isUploaded}
+              docName={docName}
+              summary={summary}
+              onSummary={handleSummary}
             />
-          </div>
+          )}
         </div>
       )
     }
@@ -281,14 +281,14 @@ export default function App() {
 
   return (
     <div className="app">
-      <Navbar 
-        active={active} 
-        onNavigate={function (id) { setActive(id); setShowHistory(false); }} 
-        theme={theme} 
-        onToggleTheme={handleThemeToggle} 
-        onRefresh={handleRefresh} 
-        isUploaded={isUploaded} 
-        onToggleHistory={function () { setShowHistory(!showHistory) }} 
+      <Navbar
+        active={active}
+        onNavigate={function (id) { setActive(id); setShowHistory(false) }}
+        theme={theme}
+        onToggleTheme={handleThemeToggle}
+        onRefresh={handleRefresh}
+        isUploaded={isUploaded}
+        onToggleHistory={function () { setShowHistory(!showHistory) }}
       />
       <main className="main">
         {isLoading && <Loader message={loadingMsg} />}
@@ -311,7 +311,7 @@ export default function App() {
                       <div className="history-item-info" onClick={function () { handleRestore(session) }}>
                         <div className="history-item-name">{session.docName}</div>
                         <div className="history-item-date">{session.date}</div>
-                        <div className="history-item-chats">{session.chatHistory ? session.chatHistory.length : 0} messages</div>
+                        <div className="history-item-chats">{session.chatHistory ? session.chatHistory.length : 0} msgs</div>
                       </div>
                       <button className="history-delete-btn" onClick={function (e) { e.stopPropagation(); handleDeleteHistory(session.id) }} aria-label="Delete session">
                         <FiTrash2 />
@@ -323,10 +323,10 @@ export default function App() {
             )}
           </div>
         )}
+
         {renderContent()}
       </main>
-      {/* UPDATED: Added onNavigate to Footer */}
-      <Footer onNavigate={function (id) { setActive(id); setShowHistory(false); }} />
+      <Footer />
     </div>
   )
 }
