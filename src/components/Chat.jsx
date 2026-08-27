@@ -3,6 +3,7 @@ import { FiSend, FiCopy, FiMic, FiDownload, FiVolume2, FiPause, FiTrash2, FiMaxi
 import { copyToClipboard, stripMarkdown } from '../utils/helpers'
 import { exportChatPdf, exportAnswerPdf } from '../utils/exportPdf'
 import '../css/Chat.css'
+import React, { useState, useRef, useEffect } from 'react'
 
 export default function Chat(props) {
   var chatHistory = props.chatHistory
@@ -32,7 +33,13 @@ export default function Chat(props) {
   var isExpanded = fsSt[0]
   var setExpanded = fsSt[1]
 
-  var hasContent = chatHistory.length > 0 || summary
+    var hasContent = chatHistory.length > 0 || summary
+  var didAutoExpand = useRef(false)
+
+  if (hasContent && !didAutoExpand.current) {
+    didAutoExpand.current = true
+    setExpanded(true)
+  }
 
   useEffect(function () {
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -58,11 +65,7 @@ export default function Chat(props) {
     }
   }, [chatHistory, isLoading])
 
-  useEffect(function () {
-    if (hasContent && !isExpanded) {
-      setExpanded(true)
-    }
-  }, [hasContent])
+  
 
   useEffect(function () {
     function handleKey(e) {
