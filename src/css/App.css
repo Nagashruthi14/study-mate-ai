@@ -235,3 +235,8 @@
     display: none;
   }
 }
+@media (max-width: 768px) {
+  .chat-fullscreen-active .footer {
+    display: none !important;
+  }
+}

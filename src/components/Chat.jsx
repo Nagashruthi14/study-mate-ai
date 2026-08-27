@@ -74,13 +74,15 @@ export default function Chat(props) {
     return function () { document.removeEventListener('keydown', handleKey) }
   }, [isExpanded])
 
-  useEffect(function () {
+    useEffect(function () {
     if (isExpanded) {
       document.body.style.overflow = 'hidden'
+      document.body.classList.add('chat-fullscreen-active')
     } else {
       document.body.style.overflow = ''
+      document.body.classList.remove('chat-fullscreen-active')
     }
-    return function () { document.body.style.overflow = '' }
+    return function () { document.body.style.overflow = ''; document.body.classList.remove('chat-fullscreen-active') }
   }, [isExpanded])
 
   function handleSend() {

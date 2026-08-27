@@ -150,43 +150,49 @@
     padding-top: 12px;
   }
 }
-
 @media (max-width: 480px) {
   .mind-header h2 {
     font-size: 18px;
   }
 
   .mind-container {
-    padding: 14px;
+    padding: 12px;
   }
 
   .mind-label {
-    font-size: 11px;
+    font-size: 10px;
     padding: 5px 8px;
+    border-width: 1px;
+    white-space: nowrap;
   }
 
   .depth-0 .mind-label {
-    font-size: 13px;
+    font-size: 12px;
     padding: 8px 14px;
   }
 
+  .depth-1 .mind-label {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .depth-2 .mind-label {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .depth-3 .mind-label {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
   .mind-children {
-    gap: 6px;
-    flex-direction: column;
-    align-items: center;
-    border-top: none;
-    border-left: 2px solid var(--border);
-    padding-top: 0;
-    padding-left: 16px;
-    margin-top: 8px;
-    margin-left: 12px;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
   }
 
   .mind-children::before {
-    top: 0;
-    left: -2px;
-    width: 2px;
     height: 12px;
-    transform: none;
   }
 }
