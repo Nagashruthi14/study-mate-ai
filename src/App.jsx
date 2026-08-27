@@ -326,7 +326,7 @@ export default function App() {
 
         {renderContent()}
       </main>
-      <Footer />
+     <Footer onNavigate={function (id) { setActive(id); setShowHistory(false) }} />
     </div>
   )
 }
