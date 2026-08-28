@@ -3,7 +3,6 @@ import { FiSend, FiCopy, FiMic, FiDownload, FiVolume2, FiPause, FiTrash2, FiMaxi
 import { copyToClipboard, stripMarkdown } from '../utils/helpers'
 import { exportChatPdf, exportAnswerPdf } from '../utils/exportPdf'
 import '../css/Chat.css'
-import React, { useState, useRef, useEffect } from 'react'
 
 export default function Chat(props) {
   var chatHistory = props.chatHistory
@@ -33,7 +32,7 @@ export default function Chat(props) {
   var isExpanded = fsSt[0]
   var setExpanded = fsSt[1]
 
-    var hasContent = chatHistory.length > 0 || summary
+  var hasContent = chatHistory.length > 0 || summary
   var didAutoExpand = useRef(false)
 
   if (hasContent && !didAutoExpand.current) {
@@ -65,8 +64,6 @@ export default function Chat(props) {
     }
   }, [chatHistory, isLoading])
 
-  
-
   useEffect(function () {
     function handleKey(e) {
       if (e.key === 'Escape' && isExpanded) {
@@ -77,7 +74,7 @@ export default function Chat(props) {
     return function () { document.removeEventListener('keydown', handleKey) }
   }, [isExpanded])
 
-    useEffect(function () {
+  useEffect(function () {
     if (isExpanded) {
       document.body.style.overflow = 'hidden'
       document.body.classList.add('chat-fullscreen-active')
