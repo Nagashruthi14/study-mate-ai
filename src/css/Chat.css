@@ -22,8 +22,11 @@
   bottom: 0;
   z-index: 200;
   min-height: 100vh;
+  min-height: 100dvh;
   max-height: 100vh;
+  max-height: 100dvh;
   height: 100vh;
+  height: 100dvh;
   border-radius: 0;
   box-shadow: none;
 }
@@ -554,7 +557,7 @@
    ============================================================ */
 
 @media (max-width: 768px) {
-  .chat-panel {
+    .chat-panel:not(.chat-expanded) {
     min-height: 240px;
     max-height: 420px;
     border-radius: var(--radius);
@@ -648,7 +651,7 @@
 }
 
 @media (max-width: 480px) {
-  .chat-panel {
+  .chat-panel:not(.chat-expanded) {
     min-height: 220px;
     max-height: 380px;
   }
@@ -777,4 +780,27 @@
   .summary-banner-body::-webkit-scrollbar-thumb {
     border: 3px solid var(--bg-secondary);
   }
+}
+/* ============================================================
+   FULLSCREEN OVERRIDE — must always win on every screen size
+   ============================================================ */
+.chat-expanded {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.chat-expanded .chat-input-area {
+  padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
 }

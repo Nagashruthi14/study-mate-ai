@@ -235,8 +235,26 @@
     display: none;
   }
 }
-@media (max-width: 768px) {
-  .chat-fullscreen-active .footer {
-    display: none !important;
-  }
+/* ============================================================
+   FULLSCREEN OVERRIDE — must always win on every screen size
+   ============================================================ */
+.chat-expanded {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.chat-expanded .chat-input-area {
+  padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
 }
